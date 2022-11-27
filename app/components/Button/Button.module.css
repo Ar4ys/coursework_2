@@ -1,0 +1,36 @@
+.button {
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  transition-property: background-color, box-sha, box-shadow, border-color, color;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.primary {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+.primary:hover {
+  background-color: var(--color-dark-hover);
+}
+
+.primary:active {
+  background-color: var(--color-dark);
+}
+
+
+.secondary {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  border: 3px solid var(--color-dark);
+}
+
+.secondary:hover {
+  background-color: var(--color-white-hover);
+}
+
+.secondary:active {
+  background-color: var(--color-white);
+}

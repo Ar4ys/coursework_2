@@ -14,6 +14,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "paths": {
+      "@/components/*": ["./app/components/*"],
+      "@/services/*": ["./services/*"],
+    },
     "plugins": [
       { "name": "next" },
       { "name": "typescript-plugin-css-modules" }
