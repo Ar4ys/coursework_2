@@ -2,6 +2,7 @@
   "name": "coursework_2",
   "version": "0.1.0",
   "private": true,
+  "license": "ISC",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,5 +19,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.3"
+  },
+  "devDependencies": {
+    "typescript-plugin-css-modules": "^3.4.0"
   }
 }
