@@ -6,6 +6,27 @@
   --color-success: #00ae11;
   --color-dark: #2a4252;
   --color-dark-hover: #2a4252e0;
+
+  --font-size-h1: 30px;
+  --font-variant-h1: 700;
+
+  --font-size-h2: 24px;
+  --font-variant-h2: 700;
+
+  --font-size-h3: 18px;
+  --font-variant-h3: 700;
+
+  --font-size-h4: 16px;
+  --font-variant-h4: 700;
+
+  --font-size-h5: 14px;
+  --font-variant-h5: 700;
+
+  --font-size-h6: 12px;
+  --font-variant-h6: 700;
+
+  --font-size-p: 24px;
+  --font-variant-p: normal;
 }
 
 html,

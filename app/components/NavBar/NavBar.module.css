@@ -1,0 +1,46 @@
+.navbar {
+  background-color: var(--color-white);
+  border: 3px solid var(--color-dark);
+  border-radius: 10px;
+}
+
+.link {
+  padding: 10px 20px;
+  color: var(--color-dark);
+  border-right: 3px solid var(--color-dark);
+  display: inline-block;
+  margin: 0;
+  font-size: var(--font-size-h1);
+  font-variant: var(--font-variant-h1);
+}
+
+.link:first-child {
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.link:last-child {
+  border-right: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.link:hover {
+  background-color: var(--color-white-hover);
+}
+
+.link:active {
+  background-color: var(--color-white);
+}
+
+.active {
+  color: var(--color-white);
+  background-color: var(--color-dark);
+}
+
+.active:hover {
+  background-color: var(--color-dark-hover);
+}
+
+.active:active {
+  background-color: var(--color-dark);
+}
