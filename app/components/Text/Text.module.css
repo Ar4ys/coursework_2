@@ -1,0 +1,34 @@
+.h1 {
+  font-size: var(--font-size-h1);
+  font-variant: var(--font-variant-h1);
+}
+
+.h2 {
+  font-size: var(--font-size-h2);
+  font-variant: var(--font-variant-h2);
+}
+
+.h3 {
+  font-size: var(--font-size-h3);
+  font-variant: var(--font-variant-h3);
+}
+
+.h4 {
+  font-size: var(--font-size-h4);
+  font-variant: var(--font-variant-h4);
+}
+
+.h5 {
+  font-size: var(--font-size-h5);
+  font-variant: var(--font-variant-h5);
+}
+
+.h6 {
+  font-size: var(--font-size-h6);
+  font-variant: var(--font-variant-h6);
+}
+
+.p {
+  font-size: var(--font-size-p);
+  font-variant: var(--font-variant-p);
+}
