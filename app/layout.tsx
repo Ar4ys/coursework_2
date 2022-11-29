@@ -4,8 +4,8 @@ import './globals.css'
 
 const navLinks: Array<NavLink> = [
   {
-    title: 'Home',
-    href: '/',
+    title: 'Work Reports',
+    href: '/reports',
   },
 ]
 
