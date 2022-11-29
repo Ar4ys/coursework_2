@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  width: 50%;
+  gap: 10px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.left {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.right {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timeInput {
+  max-width: 100px;
+}
+
+.flexGrow {
+  flex-grow: 1;
+}

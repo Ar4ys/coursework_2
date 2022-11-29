@@ -1,3 +1,6 @@
-.label {
-  margin: 0;
+.input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid var(--color-dark);
+  width: 100%;
 }
