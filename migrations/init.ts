@@ -66,7 +66,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     CREATE TABLE "reports" (
       "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
       "date" date,
-      "duration" interval,
+      "duration" float8,
       "type" report_type,
       "note" varchar(255),
       "project_id" uuid,
