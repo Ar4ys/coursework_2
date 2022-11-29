@@ -28,8 +28,3 @@
   border-right-width: 3px;
   border-radius: 0 10px 10px 0;
 }
-
-.modal {
-  width: 50%;
-  max-width: none !important;
-}

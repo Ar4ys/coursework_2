@@ -1,13 +1,9 @@
-import { Modal } from '@/components/Modal'
 import styles from './page.module.css'
-import { ReportForm } from './ReportForm'
+import { ReportRowOptions } from './ReportRowOptions'
 
 export default function Reports() {
   return (
     <div className={styles.container}>
-      <Modal className={styles.modal} title="Edit work report" show>
-        <ReportForm />
-      </Modal>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -28,7 +24,9 @@ export default function Reports() {
             <td>Made simple design in penpot</td>
             <td>27.11.2022</td>
             <td>4h</td>
-            <td>Options</td>
+            <td>
+              <ReportRowOptions />
+            </td>
           </tr>
           <tr>
             <td>Yurko Arthur</td>
@@ -37,7 +35,9 @@ export default function Reports() {
             <td>Made simple design in penpot</td>
             <td>27.11.2022</td>
             <td>4h</td>
-            <td>Options</td>
+            <td>
+              <ReportRowOptions />
+            </td>
           </tr>
         </tbody>
       </table>
