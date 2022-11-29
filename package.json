@@ -5,10 +5,11 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "dev": "npm run db:migrate && next dev",
+    "dev": "npm run db:migrate && npm run db:seed && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "db:seed": "ts-node-esm bin/seed.ts",
     "db:migrate": "ts-node-esm bin/migrate.ts && npm run db:generate",
     "db:generate": "kysely-codegen --camel-case --dialect postgres"
   },
@@ -21,13 +22,16 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "kysely": "^0.22.0",
+    "luxon": "^3.1.1",
     "next": "13.0.5",
     "pg": "^8.8.0",
+    "pg-native": "^3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.3"
   },
   "devDependencies": {
+    "@types/luxon": "^3.1.0",
     "@types/pg": "^8.6.5",
     "caniuse-lite": "1.0.30001434",
     "kysely-codegen": "^0.8.0",

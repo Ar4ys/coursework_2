@@ -1,7 +1,17 @@
+import { db } from '@/services/db'
+import { DateTime } from 'luxon'
 import styles from './page.module.css'
 import { ReportRowOptions } from './ReportRowOptions'
 
-export default function Reports() {
+export default async function Reports() {
+  const reports = await db
+    .selectFrom('reports')
+    .innerJoin('employees', 'employees.id', 'reports.employeeId')
+    .leftJoin('projects', 'projects.id', 'reports.projectId')
+    .selectAll('reports')
+    .select(['firstName', 'lastName', 'title as projectTitle'])
+    .execute()
+
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -17,28 +27,19 @@ export default function Reports() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Yurko Arthur</td>
-            <td>Coursework</td>
-            <td>Design</td>
-            <td>Made simple design in penpot</td>
-            <td>27.11.2022</td>
-            <td>4h</td>
-            <td>
-              <ReportRowOptions />
-            </td>
-          </tr>
-          <tr>
-            <td>Yurko Arthur</td>
-            <td>Coursework</td>
-            <td>Design</td>
-            <td>Made simple design in penpot</td>
-            <td>27.11.2022</td>
-            <td>4h</td>
-            <td>
-              <ReportRowOptions />
-            </td>
-          </tr>
+          {reports.map(report => (
+            <tr key={report.id}>
+              <td>{`${report.firstName} ${report.lastName}`}</td>
+              <td>{report.projectTitle}</td>
+              <td>{report.type}</td>
+              <td>{report.note}</td>
+              <td>{DateTime.fromJSDate(report.date).toLocaleString()}</td>
+              <td>{report.duration}</td>
+              <td>
+                <ReportRowOptions />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

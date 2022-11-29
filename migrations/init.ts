@@ -5,87 +5,87 @@ export async function up(db: Kysely<any>): Promise<void> {
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
     CREATE TYPE "employee_role" AS ENUM (
-      'developer',
-      'designer',
-      'manager',
-      'marketeer',
-      'data_analyst',
-      'qa'
+      'Developer',
+      'Designer',
+      'Manager',
+      'Marketeer',
+      'Data Analyst',
+      'QA'
     );
 
     CREATE TYPE "report_type" AS ENUM (
-      'development',
-      'estimation',
-      'meeting',
-      'interview',
-      'self_education'
+      'Development',
+      'Estimation',
+      'Meeting',
+      'Interview',
+      'Self Education'
     );
 
     CREATE TYPE "vacation_type" AS ENUM (
-      'vacation',
-      'work_off',
-      'unpaid_leave',
-      'paid_leave',
-      'sick_leave'
+      'Vacation',
+      'Work Off',
+      'Unpaid Leave',
+      'Paid Leave',
+      'Sick Leave'
     );
 
     CREATE TYPE "vacation_status" AS ENUM (
-      'pending',
-      'rejected',
-      'accepted'
+      'Pending',
+      'Rejected',
+      'Accepted'
     );
 
     CREATE TABLE "clients" (
-      "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
-      "first_name" varchar(255),
-      "last_name" varchar(255),
-      "created_at" timestamp DEFAULT (now()),
-      "updated_at" timestamp DEFAULT (now())
+      "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
+      "first_name" varchar(255) NOT NULL,
+      "last_name" varchar(255) NOT NULL,
+      "created_at" timestamp NOT NULL DEFAULT (now()),
+      "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     CREATE TABLE "projects" (
-      "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
-      "title" varchar(255),
-      "tech_stack" varchar(255)[],
-      "client_id" uuid,
-      "created_at" timestamp DEFAULT (now()),
-      "updated_at" timestamp DEFAULT (now())
+      "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
+      "title" varchar(255) NOT NULL,
+      "tech_stack" varchar(255)[] NOT NULL DEFAULT '{}',
+      "client_id" uuid NOT NULL,
+      "created_at" timestamp NOT NULL DEFAULT (now()),
+      "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     CREATE TABLE "employees" (
-      "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
+      "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
       "role" employee_role NOT NULL,
-      "first_name" varchar(255),
-      "last_name" varchar(255),
-      "tech_stack" varchar(255)[],
-      "price" float8,
-      "created_at" timestamp DEFAULT (now()),
-      "updated_at" timestamp DEFAULT (now())
+      "first_name" varchar(255) NOT NULL,
+      "last_name" varchar(255) NOT NULL,
+      "tech_stack" varchar(255)[] NOT NULL DEFAULT '{}',
+      "price" float8 NOT NULL,
+      "created_at" timestamp NOT NULL DEFAULT (now()),
+      "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     CREATE TABLE "reports" (
-      "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
-      "date" date,
-      "duration" float8,
-      "type" report_type,
+      "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
+      "date" date NOT NULL,
+      "duration" float8 NOT NULL,
+      "type" report_type NOT NULL,
       "note" varchar(255),
       "project_id" uuid,
-      "employee_id" uuid,
-      "created_at" timestamp DEFAULT (now()),
-      "updated_at" timestamp DEFAULT (now())
+      "employee_id" uuid NOT NULL,
+      "created_at" timestamp NOT NULL DEFAULT (now()),
+      "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     CREATE TABLE "vacations" (
-      "id" uuid PRIMARY KEY DEFAULT (uuid_generate_v4()),
-      "start_date" timestamp,
-      "end_date" timestamp,
-      "type" vacation_type,
-      "status" vacation_status DEFAULT ('pending'),
+      "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
+      "start_date" timestamp NOT NULL,
+      "end_date" timestamp NOT NULL,
+      "type" vacation_type NOT NULL,
+      "status" vacation_status NOT NULL DEFAULT 'Pending',
       "note" varchar(255),
-      "employee_id" uuid,
+      "employee_id" uuid NOT NULL,
       "manager_id" uuid,
-      "created_at" timestamp DEFAULT (now()),
-      "updated_at" timestamp DEFAULT (now())
+      "created_at" timestamp NOT NULL DEFAULT (now()),
+      "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     COMMENT ON COLUMN "employees"."price" IS 'Per hour price';
@@ -114,7 +114,7 @@ export async function up(db: Kysely<any>): Promise<void> {
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
-  const tables = ['projects_employees', 'vacations', 'employees', 'projects', 'clients']
+  const tables = ['projects_employees', 'vacations', 'reports', 'employees', 'projects', 'clients']
   const enums = ['vacation_status', 'vacation_type', 'report_type', 'employee_role']
   for (const name of tables) await db.schema.dropTable(name).ifExists().cascade().execute()
   for (const name of enums) await db.schema.dropType(name).ifExists().execute()
