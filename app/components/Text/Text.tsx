@@ -14,5 +14,5 @@ interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {
 export type TextProps = HeadingProps | ParagraphProps
 
 export const Text: FC<TextProps> = ({ variant: Variant = 'p', className, ...props }) => {
-  return <Variant className={clsx(styles[Variant], className)} {...props} />
+  return <Variant className={clsx(styles.text, styles[Variant], className)} {...props} />
 }
