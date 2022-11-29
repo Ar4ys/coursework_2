@@ -9,9 +9,9 @@ export default function FormLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className={styles.wrapper}>
       <form className={styles.form}>
-        <Input name="date" label="Date" type="date" />
         <div className={clsx(styles.left)}>
           <div className={clsx(styles.top)}>
+            <Input name="date" label="Date" type="date" />
             <Select
               className={styles.flexGrow}
               name="author"
