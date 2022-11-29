@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <NavBar links={navLinks} />
         </div>
         {children}
+        <div id="app-modal-container" />
       </body>
     </html>
   )

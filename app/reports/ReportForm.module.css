@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  gap: 10px;
+}
+
+.top {
+  display: flex;
+  gap: 10px;
+}
+
+.left {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timeInput {
+  max-width: 100px;
+}
+
+.flexGrow {
+  flex-grow: 1;
+}

@@ -20,7 +20,6 @@
   background-color: var(--color-dark);
 }
 
-
 .secondary {
   background-color: var(--color-white);
   color: var(--color-dark);
@@ -33,4 +32,10 @@
 
 .secondary:active {
   background-color: var(--color-white);
+}
+
+.clear {
+  background-color: unset;
+  border-radius: 0;
+  padding: 0;
 }

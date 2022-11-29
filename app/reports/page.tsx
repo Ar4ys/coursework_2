@@ -1,9 +1,13 @@
-import Image from 'next/image'
+import { Modal } from '@/components/Modal'
 import styles from './page.module.css'
+import { ReportForm } from './ReportForm'
 
 export default function Reports() {
   return (
     <div className={styles.container}>
+      <Modal className={styles.modal} title="Edit work report" show>
+        <ReportForm />
+      </Modal>
       <table className={styles.table}>
         <thead>
           <tr>
