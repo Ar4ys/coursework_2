@@ -10,6 +10,7 @@ export default async function Reports() {
     .leftJoin('projects', 'projects.id', 'reports.projectId')
     .selectAll('reports')
     .select(['firstName', 'lastName', 'title as projectTitle'])
+    .orderBy('date', 'desc')
     .execute()
 
   return (

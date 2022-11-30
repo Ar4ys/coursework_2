@@ -11,6 +11,7 @@ specifiers:
   dotenv: ^16.0.3
   eslint: 8.28.0
   eslint-config-next: 13.0.5
+  ky: ^0.32.2
   kysely: ^0.22.0
   kysely-codegen: ^0.8.0
   luxon: ^3.1.1
@@ -31,6 +32,7 @@ dependencies:
   dotenv: 16.0.3
   eslint: 8.28.0
   eslint-config-next: 13.0.5_hsf322ms6xhhd4b5ne6lb74y4a
+  ky: 0.32.2
   kysely: 0.22.0
   luxon: 3.1.1
   next: 13.0.5_biqbaboplfbrettd7655fr4n2y
@@ -1661,6 +1663,11 @@ packages:
     dependencies:
       array-includes: 3.1.6
       object.assign: 4.1.4
+    dev: false
+
+  /ky/0.32.2:
+    resolution: {integrity: sha512-eBJeF6IXNwX5rksdwBrE2rIJrU2d84GoTvdM7OmmTIwUVXEMd72wIwvT+nyhrqtv7AzbSNsWz7yRsHgVhj1uog==}
+    engines: {node: '>=14.16'}
     dev: false
 
   /kysely-codegen/0.8.0_kysely@0.22.0+pg@8.8.0:
