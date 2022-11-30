@@ -97,7 +97,6 @@ export const ReportForm: FC<ReportFormProps> = ({
             label="Project"
             placeholder="Select project..."
             options={projectOptions}
-            required
           />
           <Select
             className={styles.flexGrow}
