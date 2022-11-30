@@ -2,9 +2,30 @@
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Select } from '@/components/Select'
+import { Employees, Projects } from 'kysely-codegen'
+import { Selectable } from 'kysely'
+import { FC } from 'react'
 import styles from './ReportForm.module.css'
+import { ReportType } from '@/services/types'
 
-export const ReportForm = () => {
+interface ReportFormProps {
+  authors: Array<Pick<Selectable<Employees>, 'id' | 'firstName' | 'lastName'>>
+  projects: Array<Pick<Selectable<Projects>, 'id' | 'title'>>
+}
+
+const typeOptions = Object.values(ReportType).map(value => ({ value }))
+
+export const ReportForm: FC<ReportFormProps> = ({ authors, projects }) => {
+  const authorOptions = authors.map(({ id, firstName, lastName }) => ({
+    title: `${firstName} ${lastName}`,
+    value: id,
+  }))
+
+  const projectOptions = projects.map(({ id, title }) => ({
+    title,
+    value: id,
+  }))
+
   return (
     <form className={styles.form}>
       <div className={styles.left}>
@@ -14,19 +35,22 @@ export const ReportForm = () => {
             className={styles.flexGrow}
             name="author"
             label="Author"
-            options={[{ value: 'Test' }, { value: 'Test1' }]}
+            placeholder="Select author..."
+            options={authorOptions}
           />
           <Select
             className={styles.flexGrow}
             name="project"
             label="Project"
-            options={[{ value: 'Test' }, { value: 'Test1' }]}
+            placeholder="Select project..."
+            options={projectOptions}
           />
           <Select
             className={styles.flexGrow}
-            name="category"
+            name="type"
             label="Category"
-            options={[{ value: 'Test' }, { value: 'Test1' }]}
+            placeholder="Select category..."
+            options={typeOptions}
           />
         </div>
         <Input name="description" label="Description" type="text" />

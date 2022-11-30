@@ -20,6 +20,7 @@ export const Select: FC<SelectProps> = ({
   labelProps,
   wrapperProps,
   options,
+  placeholder,
   className,
   selectClassName,
   ...props
@@ -27,6 +28,11 @@ export const Select: FC<SelectProps> = ({
   return (
     <Field {...wrapperProps} labelProps={labelProps} label={label} className={className}>
       <select {...props} className={clsx(styles.select, selectClassName)}>
+        {placeholder && (
+          <option value="" disabled selected hidden>
+            {placeholder}
+          </option>
+        )}
         {options.map(optionProps => (
           <option key={optionProps.value?.toString()} {...optionProps}>
             {optionProps.title ?? optionProps.value}
