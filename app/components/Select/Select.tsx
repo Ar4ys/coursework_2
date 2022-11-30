@@ -26,7 +26,13 @@ export const Select: FC<SelectProps> = ({
   ...props
 }) => {
   return (
-    <Field {...wrapperProps} labelProps={labelProps} label={label} className={className}>
+    <Field
+      {...wrapperProps}
+      labelProps={labelProps}
+      label={label}
+      className={className}
+      required={props.required}
+    >
       <select {...props} className={clsx(styles.select, selectClassName)}>
         {placeholder && (
           <option value="" disabled selected hidden>

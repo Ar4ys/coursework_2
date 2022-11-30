@@ -21,7 +21,13 @@ export const Input: FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <Field {...wrapperProps} labelProps={labelProps} label={label} className={className}>
+    <Field
+      {...wrapperProps}
+      labelProps={labelProps}
+      label={label}
+      className={className}
+      required={props.required}
+    >
       <input title={label} {...props} className={clsx(styles.input, inputClassName)} />
     </Field>
   )

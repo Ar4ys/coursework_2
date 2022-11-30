@@ -49,13 +49,14 @@ export const ReportForm: FC<ReportFormProps> = ({ authors, projects }) => {
     <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.left}>
         <div className={styles.top}>
-          <Input name="date" label="Date" type="date" />
+          <Input name="date" label="Date" type="date" required />
           <Select
             className={styles.flexGrow}
             name="employeeId"
             label="Author"
             placeholder="Select author..."
             options={authorOptions}
+            required
           />
           <Select
             className={styles.flexGrow}
@@ -63,6 +64,7 @@ export const ReportForm: FC<ReportFormProps> = ({ authors, projects }) => {
             label="Project"
             placeholder="Select project..."
             options={projectOptions}
+            required
           />
           <Select
             className={styles.flexGrow}
@@ -70,6 +72,7 @@ export const ReportForm: FC<ReportFormProps> = ({ authors, projects }) => {
             label="Category"
             placeholder="Select category..."
             options={typeOptions}
+            required
           />
         </div>
         <Input name="note" label="Description" type="text" />
@@ -82,6 +85,7 @@ export const ReportForm: FC<ReportFormProps> = ({ authors, projects }) => {
           label="Time"
           type="number"
           min={0}
+          required
         />
         <Button type="submit" loading={loading}>
           Submit
