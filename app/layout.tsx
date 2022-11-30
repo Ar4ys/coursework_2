@@ -1,4 +1,5 @@
 import { NavBar, NavLink } from '@/components/NavBar'
+import { GlobalKeyboardListener } from '@/components/GlobalKeyboardListener'
 import styles from './layout.module.css'
 import './globals.css'
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head />
       <body>
+        <GlobalKeyboardListener />
         <div className={styles.navbarWrapper}>
           <NavBar links={navLinks} />
         </div>
