@@ -16,19 +16,13 @@ interface ModalProps {
   onClose?: () => void
 }
 
-export const Modal: FC<ModalProps> = ({ title, className, children, show, onClose }) => {
+const noopFn = () => {}
+
+export const Modal: FC<ModalProps> = ({ title, className, children, show, onClose = noopFn }) => {
   const isClient = useIsClient()
   const modalRef = useRef<HTMLDivElement>(null)
 
-  const handleCloseClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
-    e => {
-      e.preventDefault()
-      onClose?.()
-    },
-    [onClose],
-  )
-
-  useOnClickOutside(modalRef, handleCloseClick)
+  useOnClickOutside(modalRef, onClose)
 
   const content = show && (
     <div className={styles.modalOverlay}>
@@ -36,7 +30,7 @@ export const Modal: FC<ModalProps> = ({ title, className, children, show, onClos
         <div className={styles.modalHeader}>
           {title && <Text variant="h3">{title}</Text>}
           <div />
-          <Button variant="clear" className={styles.modalX} onClick={handleCloseClick}>
+          <Button variant="clear" className={styles.modalX} onClick={onClose}>
             x
           </Button>
         </div>
