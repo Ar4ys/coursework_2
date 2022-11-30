@@ -12,6 +12,10 @@ const navLinks: Array<NavLink> = [
     href: '/clients',
   },
   {
+    title: 'Employees',
+    href: '/employees',
+  },
+  {
     title: 'Projects',
     href: '/projects',
   },
