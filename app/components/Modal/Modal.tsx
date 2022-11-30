@@ -1,8 +1,8 @@
 'use client'
 import clsx from 'clsx'
-import { FC, useCallback, MouseEventHandler } from 'react'
+import { FC, useCallback, MouseEventHandler, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { useIsClient } from 'usehooks-ts'
+import { useIsClient, useOnClickOutside } from 'usehooks-ts'
 import { Button } from '../Button'
 import { Text } from '../Text'
 import styles from './Modal.module.css'
@@ -17,6 +17,7 @@ interface ModalProps {
 
 export const Modal: FC<ModalProps> = ({ title, className, children, show, onClose }) => {
   const isClient = useIsClient()
+  const modalRef = useRef<HTMLDivElement>(null)
 
   const handleCloseClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
     e => {
@@ -26,9 +27,11 @@ export const Modal: FC<ModalProps> = ({ title, className, children, show, onClos
     [onClose],
   )
 
+  useOnClickOutside(modalRef, handleCloseClick)
+
   const content = show && (
     <div className={styles.modalOverlay}>
-      <div className={clsx(styles.modal, className)}>
+      <div ref={modalRef} className={clsx(styles.modal, className)}>
         <div className={styles.modalHeader}>
           {title && <Text variant="h3">{title}</Text>}
           <div />
