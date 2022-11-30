@@ -1,15 +1,11 @@
-import {
-  db,
-  getEmployeesSelectOptions,
-  getManagersSelectOptions,
-  getProjectsSelectOptions,
-} from '@/services/db'
+import { Table } from '@/components/Table'
+import { db, getEmployeesSelectOptions, getManagersSelectOptions } from '@/services/db'
 import { toSerializable } from '@/services/form'
 import { DateTime } from 'luxon'
 import styles from './page.module.css'
 import { VacationRowOptions } from './VacationRowOptions'
 
-export default async function Reports() {
+export default async function VacationsPage() {
   const [employees, managers, vacations] = await Promise.all([
     getEmployeesSelectOptions(),
     getManagersSelectOptions(),
@@ -29,43 +25,32 @@ export default async function Reports() {
 
   return (
     <div className={styles.container}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Employee</th>
-            <th>Category</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-            <th>Manged by</th>
-            <th>Note</th>
-            <th>Options</th>
+      <Table
+        header={['Employee', 'Category', 'Start', 'End', 'Status', 'Manged', 'Note', 'Options']}
+        suspense
+      >
+        {vacations.map(vacation => (
+          <tr key={vacation.id}>
+            <td>{`${vacation.employeeFirstName} ${vacation.employeeLastName}`}</td>
+            <td>{vacation.type}</td>
+            <td>{DateTime.fromJSDate(vacation.startDate).toLocaleString()}</td>
+            <td>{DateTime.fromJSDate(vacation.endDate).toLocaleString()}</td>
+            <td className={styles[vacation.status]}>{vacation.status}</td>
+            <td>
+              {vacation.managerFirstName &&
+                `${vacation.managerFirstName} ${vacation.mangerLastName}`}
+            </td>
+            <td>{vacation.note}</td>
+            <td>
+              <VacationRowOptions
+                vacation={toSerializable(vacation)}
+                employees={toSerializable(employees)}
+                managers={toSerializable(managers)}
+              />
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {vacations.map(vacation => (
-            <tr key={vacation.id}>
-              <td>{`${vacation.employeeFirstName} ${vacation.employeeLastName}`}</td>
-              <td>{vacation.type}</td>
-              <td>{DateTime.fromJSDate(vacation.startDate).toLocaleString()}</td>
-              <td>{DateTime.fromJSDate(vacation.endDate).toLocaleString()}</td>
-              <td className={styles[vacation.status]}>{vacation.status}</td>
-              <td>
-                {vacation.managerFirstName &&
-                  `${vacation.managerFirstName} ${vacation.mangerLastName}`}
-              </td>
-              <td>{vacation.note}</td>
-              <td>
-                <VacationRowOptions
-                  vacation={toSerializable(vacation)}
-                  employees={toSerializable(employees)}
-                  managers={toSerializable(managers)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        ))}
+      </Table>
     </div>
   )
 }

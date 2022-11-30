@@ -1,11 +1,12 @@
-import { db, getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
+import { db } from '@/services/db'
 import { toSerializable } from '@/services/form'
 import { sql } from 'kysely'
 import { DateTime } from 'luxon'
 import styles from './page.module.css'
 import { EmployeeRowOptions } from './EmployeeRowOptions'
+import { Table } from '@/components/Table'
 
-export default async function Reports() {
+export default async function EmployeesPage() {
   const employee = await db
     .selectFrom('employees')
     .leftJoin('reports', 'reports.employeeId', 'employees.id')
@@ -17,34 +18,21 @@ export default async function Reports() {
 
   return (
     <div className={styles.container}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Price</th>
-            <th>Tech Stack</th>
-            <th>Projects</th>
-            <th>Since</th>
-            <th>Options</th>
+      <Table header={['Name', 'Role', 'Price', 'Tech Stack', 'Projects', 'Since', 'Options']}>
+        {employee.map(employee => (
+          <tr key={employee.id}>
+            <td>{`${employee.firstName} ${employee.lastName}`}</td>
+            <td>{employee.role}</td>
+            <td>{employee.price}</td>
+            <td>{employee.techStack.join(', ')}</td>
+            <td>{employee.projects.join(', ')}</td>
+            <td>{DateTime.fromJSDate(employee.createdAt).toLocaleString()}</td>
+            <td>
+              <EmployeeRowOptions employee={toSerializable(employee)} />
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {employee.map(employee => (
-            <tr key={employee.id}>
-              <td>{`${employee.firstName} ${employee.lastName}`}</td>
-              <td>{employee.role}</td>
-              <td>{employee.price}</td>
-              <td>{employee.techStack.join(', ')}</td>
-              <td>{employee.projects.join(', ')}</td>
-              <td>{DateTime.fromJSDate(employee.createdAt).toLocaleString()}</td>
-              <td>
-                <EmployeeRowOptions employee={toSerializable(employee)} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        ))}
+      </Table>
     </div>
   )
 }
