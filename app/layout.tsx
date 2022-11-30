@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className={styles.navbarWrapper}>
           <NavBar links={navLinks} />
         </div>
-        {children}
+        <main className={styles.mainWrapper}>{children}</main>
         <div id="app-modal-container" />
       </body>
     </html>
