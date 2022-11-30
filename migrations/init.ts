@@ -47,7 +47,7 @@ export async function up(db: Kysely<any>): Promise<void> {
       "id" uuid PRIMARY KEY NOT NULL DEFAULT (uuid_generate_v4()),
       "title" varchar(255) NOT NULL,
       "tech_stack" varchar(255)[] NOT NULL DEFAULT '{}',
-      "client_id" uuid NOT NULL,
+      "client_id" uuid NOT NULL REFERENCES "clients" ON DELETE CASCADE,
       "created_at" timestamp NOT NULL DEFAULT (now()),
       "updated_at" timestamp NOT NULL DEFAULT (now())
     );
@@ -69,8 +69,8 @@ export async function up(db: Kysely<any>): Promise<void> {
       "duration" float8 NOT NULL,
       "type" report_type NOT NULL,
       "note" varchar(255),
-      "project_id" uuid,
-      "employee_id" uuid NOT NULL,
+      "project_id" uuid REFERENCES "projects" ON DELETE SET NULL,
+      "employee_id" uuid NOT NULL REFERENCES "employees" ON DELETE CASCADE,
       "created_at" timestamp NOT NULL DEFAULT (now()),
       "updated_at" timestamp NOT NULL DEFAULT (now())
     );
@@ -82,34 +82,20 @@ export async function up(db: Kysely<any>): Promise<void> {
       "type" vacation_type NOT NULL,
       "status" vacation_status NOT NULL DEFAULT 'Pending',
       "note" varchar(255),
-      "employee_id" uuid NOT NULL,
-      "manager_id" uuid,
+      "employee_id" uuid NOT NULL REFERENCES "employees" ON DELETE CASCADE,
+      "manager_id" uuid REFERENCES "employees" ON DELETE SET NULL,
       "created_at" timestamp NOT NULL DEFAULT (now()),
       "updated_at" timestamp NOT NULL DEFAULT (now())
     );
 
     COMMENT ON COLUMN "employees"."price" IS 'Per hour price';
 
-    ALTER TABLE "projects" ADD FOREIGN KEY ("client_id") REFERENCES "clients" ("id");
-
     CREATE TABLE "projects_employees" (
-      "projects_id" uuid,
-      "employees_id" uuid,
+      "projects_id" uuid REFERENCES "projects" ON DELETE CASCADE,
+      "employees_id" uuid REFERENCES "employees" ON DELETE CASCADE,
       PRIMARY KEY ("projects_id", "employees_id")
     );
 
-    ALTER TABLE "projects_employees" ADD FOREIGN KEY ("projects_id") REFERENCES "projects" ("id");
-
-    ALTER TABLE "projects_employees" ADD FOREIGN KEY ("employees_id") REFERENCES "employees" ("id");
-
-
-    ALTER TABLE "reports" ADD FOREIGN KEY ("project_id") REFERENCES "projects" ("id");
-
-    ALTER TABLE "reports" ADD FOREIGN KEY ("employee_id") REFERENCES "employees" ("id");
-
-    ALTER TABLE "vacations" ADD FOREIGN KEY ("employee_id") REFERENCES "employees" ("id");
-
-    ALTER TABLE "vacations" ADD FOREIGN KEY ("manager_id") REFERENCES "employees" ("id");
   `.execute(db)
 }
 

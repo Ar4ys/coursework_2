@@ -81,7 +81,6 @@ export const ProjectForm: FC<ProjectFormProps> = ({ clients, editing, values, on
         name="techStack"
         label="Tech Stack"
         defaultValue={editing ? values.techStack.join(', ') : undefined}
-        required
       />
       <Button className={styles.button} type="submit" loading={loading}>
         Submit
