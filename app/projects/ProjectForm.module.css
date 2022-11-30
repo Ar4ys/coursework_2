@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.flexGrow {
+  flex-grow: 1;
+}
+
+.button {
+  height: 50%;
+}

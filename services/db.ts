@@ -17,3 +17,6 @@ export const getEmployeesSelectOptions = () =>
 
 export const getProjectsSelectOptions = () =>
   db.selectFrom('projects').select(['id', 'title']).execute()
+
+export const getClientsSelectOptions = () =>
+  db.selectFrom('clients').select(['id', 'firstName', 'lastName']).execute()
