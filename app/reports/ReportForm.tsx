@@ -78,7 +78,9 @@ export const ReportForm: FC<ReportFormProps> = ({
             name="date"
             label="Date"
             type="date"
-            defaultValue={editing ? DateTime.fromISO(values.date).toISODate() : undefined}
+            defaultValue={
+              editing ? DateTime.fromISO(values.date).toISODate() : DateTime.now().toISODate()
+            }
             required
           />
           <Select
