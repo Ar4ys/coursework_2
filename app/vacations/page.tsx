@@ -26,7 +26,7 @@ export default async function VacationsPage() {
   return (
     <div className={styles.container}>
       <Table
-        header={['Employee', 'Category', 'Start', 'End', 'Status', 'Manged', 'Note', 'Options']}
+        header={['Employee', 'Category', 'Start', 'End', 'Status', 'Manged By', 'Note', 'Options']}
         suspense
       >
         {vacations.map(vacation => (
