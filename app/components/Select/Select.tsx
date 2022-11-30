@@ -23,6 +23,8 @@ export const Select: FC<SelectProps> = ({
   placeholder,
   className,
   selectClassName,
+  required,
+  defaultValue,
   ...props
 }) => {
   return (
@@ -31,9 +33,14 @@ export const Select: FC<SelectProps> = ({
       labelProps={labelProps}
       label={label}
       className={className}
-      required={props.required}
+      required={required}
     >
-      <select {...props} defaultValue="" className={clsx(styles.select, selectClassName)}>
+      <select
+        {...props}
+        className={clsx(styles.select, selectClassName)}
+        defaultValue={defaultValue ?? ''}
+        required={required}
+      >
         {placeholder && (
           <option value="" disabled hidden>
             {placeholder}
