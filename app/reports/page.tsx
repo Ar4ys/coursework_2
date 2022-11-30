@@ -1,4 +1,5 @@
 import { db, getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
+import { toSerializable } from '@/services/form'
 import { DateTime } from 'luxon'
 import styles from './page.module.css'
 import { ReportRowOptions } from './ReportRowOptions'
@@ -42,8 +43,9 @@ export default async function Reports() {
               <td>{report.duration}</td>
               <td>
                 <ReportRowOptions
-                  reportId={report.id}
-                  formProps={{ authors: employees, projects }}
+                  report={toSerializable(report)}
+                  authors={employees}
+                  projects={projects}
                 />
               </td>
             </tr>

@@ -14,13 +14,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         projectId: req.body.projectId,
       })
       .execute()
-    res.status(200).send(undefined)
+  } else if (req.method === 'PUT') {
+    await db
+      .updateTable('reports')
+      .set({
+        date: req.body.date,
+        duration: req.body.duration,
+        employeeId: req.body.employeeId,
+        type: req.body.type,
+        note: req.body.note,
+        projectId: req.body.projectId,
+      })
+      .where('id', '=', req.body.id)
+      .execute()
   } else if (req.method === 'DELETE') {
     if (typeof req.query.id !== 'string')
       return res.status(400).send('Parameter "id" should be of type "string"')
     await db.deleteFrom('reports').where('id', '=', req.query.id).execute()
-    res.status(200).send(undefined)
   } else {
-    res.status(400).send('Invalid Request')
+    return res.status(400).send('Invalid Request')
   }
+
+  res.status(200).send(undefined)
 }
