@@ -1,17 +1,21 @@
-import { db } from '@/services/db'
+import { db, getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
 import { DateTime } from 'luxon'
 import styles from './page.module.css'
 import { ReportRowOptions } from './ReportRowOptions'
 
 export default async function Reports() {
-  const reports = await db
-    .selectFrom('reports')
-    .innerJoin('employees', 'employees.id', 'reports.employeeId')
-    .leftJoin('projects', 'projects.id', 'reports.projectId')
-    .selectAll('reports')
-    .select(['firstName', 'lastName', 'title as projectTitle'])
-    .orderBy('date', 'desc')
-    .execute()
+  const [employees, projects, reports] = await Promise.all([
+    getEmployeesSelectOptions(),
+    getProjectsSelectOptions(),
+    db
+      .selectFrom('reports')
+      .innerJoin('employees', 'employees.id', 'reports.employeeId')
+      .leftJoin('projects', 'projects.id', 'reports.projectId')
+      .selectAll('reports')
+      .select(['firstName', 'lastName', 'title as projectTitle'])
+      .orderBy('date', 'desc')
+      .execute(),
+  ])
 
   return (
     <div className={styles.container}>
@@ -37,7 +41,10 @@ export default async function Reports() {
               <td>{DateTime.fromJSDate(report.date).toLocaleString()}</td>
               <td>{report.duration}</td>
               <td>
-                <ReportRowOptions />
+                <ReportRowOptions
+                  reportId={report.id}
+                  formProps={{ authors: employees, projects }}
+                />
               </td>
             </tr>
           ))}

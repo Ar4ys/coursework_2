@@ -12,7 +12,7 @@ import { ReportType } from '@/services/types'
 import { formDataToObject } from '@/services/form'
 import styles from './ReportForm.module.css'
 
-interface ReportFormProps {
+export interface ReportFormProps {
   authors: Array<Pick<Selectable<Employees>, 'id' | 'firstName' | 'lastName'>>
   projects: Array<Pick<Selectable<Projects>, 'id' | 'title'>>
 }

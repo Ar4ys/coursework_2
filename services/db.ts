@@ -11,3 +11,9 @@ export const db = new Kysely<DB>({
   }),
   plugins: [new CamelCasePlugin()],
 })
+
+export const getEmployeesSelectOptions = () =>
+  db.selectFrom('employees').select(['id', 'firstName', 'lastName']).execute()
+
+export const getProjectsSelectOptions = () =>
+  db.selectFrom('projects').select(['id', 'title']).execute()

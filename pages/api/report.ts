@@ -15,6 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
       .execute()
     res.status(200).send(undefined)
+  } else if (req.method === 'DELETE') {
+    if (typeof req.query.id !== 'string')
+      return res.status(400).send('Parameter "id" should be of type "string"')
+    await db.deleteFrom('reports').where('id', '=', req.query.id).execute()
+    res.status(200).send(undefined)
   } else {
     res.status(400).send('Invalid Request')
   }
