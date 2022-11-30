@@ -1,5 +1,5 @@
-import { db, getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
 import React from 'react'
+import { getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
 import { ReportForm } from './ReportForm'
 
 export default async function FormLayout({ children }: { children: React.ReactNode }) {

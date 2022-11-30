@@ -1,10 +1,11 @@
-import { Table } from '@/components/Table'
-import { db, getClientsSelectOptions } from '@/services/db'
-import { toSerializable } from '@/services/form'
 import { sql } from 'kysely'
 import { DateTime } from 'luxon'
-import styles from './page.module.css'
+
+import { db, getClientsSelectOptions } from '@/services/db'
+import { toSerializable } from '@/services/form'
+import { Table } from '@/components/Table'
 import { ProjectRowOptions } from './ProjectRowOptions'
+import styles from './page.module.css'
 
 export default async function ProjectsPage() {
   const [clients, projects] = await Promise.all([

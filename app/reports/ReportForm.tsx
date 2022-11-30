@@ -1,5 +1,5 @@
 'use client'
-import { FC, FormEventHandler, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, FormEventHandler, useCallback, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Employees, Projects } from 'kysely-codegen'
 import { Selectable } from 'kysely'

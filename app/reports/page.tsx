@@ -1,9 +1,9 @@
-import { Table } from '@/components/Table'
+import { DateTime } from 'luxon'
 import { db, getEmployeesSelectOptions, getProjectsSelectOptions } from '@/services/db'
 import { toSerializable } from '@/services/form'
-import { DateTime } from 'luxon'
-import styles from './page.module.css'
+import { Table } from '@/components/Table'
 import { ReportRowOptions } from './ReportRowOptions'
+import styles from './page.module.css'
 
 export default async function ReportsPage() {
   const [employees, projects, reports] = await Promise.all([

@@ -1,10 +1,11 @@
-import { db } from '@/services/db'
-import { toSerializable } from '@/services/form'
 import { sql } from 'kysely'
 import { DateTime } from 'luxon'
-import styles from './page.module.css'
-import { ClientRowOptions } from './ClientRowOptions'
+
+import { db } from '@/services/db'
+import { toSerializable } from '@/services/form'
 import { Table } from '@/components/Table'
+import { ClientRowOptions } from './ClientRowOptions'
+import styles from './page.module.css'
 
 export default async function ClientsPage() {
   const clients = await db

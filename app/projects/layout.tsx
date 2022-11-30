@@ -1,5 +1,5 @@
-import { getClientsSelectOptions } from '@/services/db'
 import React from 'react'
+import { getClientsSelectOptions } from '@/services/db'
 import { ProjectForm } from './ProjectForm'
 
 export default async function FormLayout({ children }: { children: React.ReactNode }) {

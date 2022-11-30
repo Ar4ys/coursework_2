@@ -1,6 +1,6 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import { FC } from 'react'
+import { useRouter } from 'next/navigation'
 import { useEventListener } from 'usehooks-ts'
 
 export const GlobalKeyboardListener: FC = () => {

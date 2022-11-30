@@ -1,9 +1,9 @@
-import { Table } from '@/components/Table'
-import { db, getEmployeesSelectOptions, getManagersSelectOptions } from '@/services/db'
-import { toSerializable } from '@/services/form'
 import { DateTime } from 'luxon'
-import styles from './page.module.css'
+import { toSerializable } from '@/services/form'
+import { db, getEmployeesSelectOptions, getManagersSelectOptions } from '@/services/db'
+import { Table } from '@/components/Table'
 import { VacationRowOptions } from './VacationRowOptions'
+import styles from './page.module.css'
 
 export default async function VacationsPage() {
   const [employees, managers, vacations] = await Promise.all([

@@ -1,17 +1,17 @@
 'use client'
-import { FC, FormEventHandler, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, FormEventHandler, useCallback, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Employees, Projects } from 'kysely-codegen'
+import { Employees } from 'kysely-codegen'
 import { Selectable } from 'kysely'
+import { DateTime } from 'luxon'
 import ky from 'ky'
 
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Select } from '@/components/Select'
-import { ReportType, VacationStatus, VacationType } from '@/services/types'
+import { VacationStatus, VacationType } from '@/services/types'
 import { formDataToObject } from '@/services/form'
 import styles from './VacationForm.module.css'
-import { DateTime } from 'luxon'
 
 interface VacationFormCreate {
   editing?: false

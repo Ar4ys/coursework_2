@@ -1,8 +1,9 @@
 'use client'
-import clsx from 'clsx'
 import { FC, useCallback, MouseEventHandler, useRef } from 'react'
-import { createPortal } from 'react-dom'
 import { useIsClient, useOnClickOutside } from 'usehooks-ts'
+import { createPortal } from 'react-dom'
+import clsx from 'clsx'
+
 import { Button } from '../Button'
 import { Text } from '../Text'
 import styles from './Modal.module.css'
