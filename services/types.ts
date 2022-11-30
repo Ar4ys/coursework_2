@@ -16,8 +16,8 @@ export enum ReportType {
 }
 
 export enum VacationStatus {
-  Accepted = 'Accepted',
   Pending = 'Pending',
+  Accepted = 'Accepted',
   Rejected = 'Rejected',
 }
 

@@ -8,6 +8,10 @@ const navLinks: Array<NavLink> = [
     href: '/reports',
   },
   {
+    title: 'Vacations',
+    href: '/vacations',
+  },
+  {
     title: 'Clients',
     href: '/clients',
   },
