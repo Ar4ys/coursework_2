@@ -1,14 +1,14 @@
 'use client'
 import { FC } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEventListener } from 'usehooks-ts'
 
 export const GlobalKeyboardListener: FC = () => {
   const { push } = useRouter()
+  const pathname = usePathname()
 
   useEventListener('keyup', event => {
     if (!event.altKey || !event.shiftKey) return
-    console.log(event.code)
 
     switch (event.code) {
       case 'Digit1':
@@ -26,9 +26,12 @@ export const GlobalKeyboardListener: FC = () => {
       case 'Digit5':
         push('/projects')
         return
-      case 'Digit6':
-        // TODO
-        push('/reports')
+      case 'KeyR':
+        if (pathname?.endsWith('/search')) {
+          push(pathname.replace('/search', ''))
+        } else if (pathname) {
+          push(`${pathname}/search`)
+        }
         return
     }
   })
