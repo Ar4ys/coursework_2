@@ -82,7 +82,7 @@ export const VacationForm: FC<VacationFormProps> = ({
             placeholder="Select employee..."
             options={employeeOptions}
             required={!isSearching}
-            allowEmpty={isSearching}
+            allowEmpty={isSearching && !editing}
           />
           <Select
             className={styles.flexGrow}
@@ -92,7 +92,7 @@ export const VacationForm: FC<VacationFormProps> = ({
             placeholder="Select category..."
             options={typeOptions}
             required={!isSearching}
-            allowEmpty={isSearching}
+            allowEmpty={isSearching && !editing}
           />
           <Input
             name="startDate"
@@ -118,7 +118,7 @@ export const VacationForm: FC<VacationFormProps> = ({
             placeholder="Select status..."
             options={statusOptions}
             required={!isSearching}
-            allowEmpty={isSearching}
+            allowEmpty={isSearching && !editing}
           />
         </div>
         <Input name="note" label="Description" type="text" defaultValue={getDefault('note')} />
@@ -131,7 +131,7 @@ export const VacationForm: FC<VacationFormProps> = ({
           label="Managed By"
           placeholder="Select manager..."
           options={managerOptions}
-          allowEmpty={isSearching}
+          allowEmpty={isSearching && !editing}
         />
         <Button type="submit" loading={isLoading}>
           Submit

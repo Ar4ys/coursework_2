@@ -71,7 +71,7 @@ export const EmployeeForm: FC<EmployeeFormProps> = ({ editing, values, onSubmit 
           placeholder="Select role..."
           options={roleOptions}
           required={!isSearching}
-          allowEmpty={isSearching}
+          allowEmpty={isSearching && !editing}
         />
         <Input
           className={styles.flexGrow}
