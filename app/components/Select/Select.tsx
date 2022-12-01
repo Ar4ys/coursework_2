@@ -10,6 +10,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   selectClassName?: string
   labelProps?: TextProps
   wrapperProps?: FieldProps
+  allowEmpty?: boolean
   options: Array<OptionProps>
 }
 
@@ -25,6 +26,7 @@ export const Select: FC<SelectProps> = ({
   selectClassName,
   required,
   defaultValue,
+  allowEmpty,
   ...props
 }) => {
   return (
@@ -42,7 +44,7 @@ export const Select: FC<SelectProps> = ({
         required={required}
       >
         {placeholder && (
-          <option value="" disabled hidden>
+          <option value="" disabled={!allowEmpty} hidden={!allowEmpty}>
             {placeholder}
           </option>
         )}

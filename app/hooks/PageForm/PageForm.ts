@@ -23,6 +23,20 @@ export const usePageForm = ({ editing, values, onSubmit }: UsePageForm) => {
     [editing, isSearching, searchParams, values],
   )
 
+  const getDefaultArray = useCallback(
+    (key: string): any[] => {
+      const defaultValue = getDefault(key)
+      if (Array.isArray(defaultValue)) {
+        return defaultValue
+      } else if (typeof defaultValue === 'string') {
+        return defaultValue.split(', ')
+      } else {
+        return []
+      }
+    },
+    [getDefault],
+  )
+
   const getDefaultDate = useCallback(
     (key: string) => {
       const defaultValue = getDefault(key)
@@ -41,18 +55,20 @@ export const usePageForm = ({ editing, values, onSubmit }: UsePageForm) => {
       setLoading(true)
       const formData = formDataToObject(event.currentTarget)
 
-      if (isSearching) {
+      if (editing) {
+        await onSubmit?.(formData)
+      } else if (isSearching) {
         const queryParams = new URLSearchParams(Object.entries(formData))
         push(pathname + '?' + queryParams.toString())
       } else {
-        onSubmit?.(formData)
+        await onSubmit?.(formData)
         formRef.current?.reset()
       }
 
       refresh()
       setLoading(false)
     },
-    [isLoading, isSearching, refresh, push, pathname, onSubmit],
+    [isLoading, editing, isSearching, refresh, onSubmit, push, pathname],
   )
 
   return {
@@ -61,6 +77,7 @@ export const usePageForm = ({ editing, values, onSubmit }: UsePageForm) => {
     formRef,
     getDefault,
     getDefaultDate,
+    getDefaultArray,
     handleSubmit,
   }
 }
