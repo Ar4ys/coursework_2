@@ -27,17 +27,17 @@ export const ClientForm: FC<ClientFormProps> = ({ editing, values, onSubmit }) =
       editing,
       values,
       onSubmit: useCallback(
-        async values => {
+        async newValues => {
           await ky('/api/client', {
             method: editing ? 'put' : 'post',
             json: {
-              ...values,
+              ...newValues,
               id: editing ? values.id : undefined,
             },
           })
           onSubmit?.()
         },
-        [editing, onSubmit],
+        [editing, onSubmit, values?.id],
       ),
     },
   )
