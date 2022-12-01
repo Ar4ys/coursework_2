@@ -1,12 +1,10 @@
 'use client'
-import { FC, FormEventHandler, useCallback, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { DateTime } from 'luxon'
+import { FC, useCallback } from 'react'
 import ky from 'ky'
 
+import { usePageForm } from '@/hooks/PageForm'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import { formDataToObject } from '@/services/form'
 import styles from './ClientForm.module.css'
 
 interface ClientFormCreate {
@@ -24,27 +22,24 @@ type ClientFormProps = (ClientFormEdit | ClientFormCreate) & {
 }
 
 export const ClientForm: FC<ClientFormProps> = ({ editing, values, onSubmit }) => {
-  const [loading, setLoading] = useState(false)
-  const formRef = useRef<HTMLFormElement>(null)
-  const { refresh } = useRouter()
-
-  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-    async event => {
-      event.preventDefault()
-      setLoading(true)
-      await ky('/api/client', {
-        method: editing ? 'put' : 'post',
-        json: {
-          ...formDataToObject(event.currentTarget),
-          id: editing ? values.id : undefined,
+  const { isLoading, isSearching, formRef, getDefault, getDefaultDate, handleSubmit } = usePageForm(
+    {
+      editing,
+      values,
+      onSubmit: useCallback(
+        async values => {
+          await ky('/api/client', {
+            method: editing ? 'put' : 'post',
+            json: {
+              ...values,
+              id: editing ? values.id : undefined,
+            },
+          })
+          onSubmit?.()
         },
-      })
-      setLoading(false)
-      formRef.current?.reset()
-      refresh()
-      onSubmit?.()
+        [editing, onSubmit],
+      ),
     },
-    [editing, values?.id, refresh, onSubmit],
   )
 
   return (
@@ -53,27 +48,25 @@ export const ClientForm: FC<ClientFormProps> = ({ editing, values, onSubmit }) =
         className={styles.flexGrow}
         name="firstName"
         label="First Name"
-        defaultValue={editing ? values.firstName : undefined}
-        required
+        defaultValue={getDefault('firstName')}
+        required={!isSearching}
       />
       <Input
         className={styles.flexGrow}
         name="lastName"
         label="Last Name"
-        defaultValue={editing ? values.lastName : undefined}
-        required
+        defaultValue={getDefault('lastName')}
+        required={!isSearching}
       />
       <Input
         className={styles.flexGrow}
         name="createdAt"
         label="Since"
         type="date"
-        defaultValue={
-          editing ? DateTime.fromISO(values.createdAt).toISODate() : DateTime.now().toISODate()
-        }
-        required
+        defaultValue={getDefaultDate('createdAt')?.toISODate()}
+        required={!isSearching}
       />
-      <Button className={styles.button} type="submit" loading={loading}>
+      <Button className={styles.button} type="submit" loading={isLoading}>
         Submit
       </Button>
     </form>

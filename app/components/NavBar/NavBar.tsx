@@ -12,10 +12,11 @@ export interface NavLink {
 
 interface NavBarProps {
   className?: string
+  exact?: boolean
   links: Array<NavLink>
 }
 
-export const NavBar: FC<NavBarProps> = ({ className, links }) => {
+export const NavBar: FC<NavBarProps> = ({ className, links, exact }) => {
   const pathname = usePathname()
   return (
     <nav className={clsx(styles.navbar, className)}>
@@ -23,7 +24,10 @@ export const NavBar: FC<NavBarProps> = ({ className, links }) => {
         <Link
           key={href}
           href={href}
-          className={clsx(styles.link, pathname === href && styles.active)}
+          className={clsx(
+            styles.link,
+            (exact ? pathname === href : pathname?.startsWith(href)) && styles.active,
+          )}
         >
           {title}
         </Link>

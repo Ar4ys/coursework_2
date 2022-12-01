@@ -28,3 +28,11 @@ export enum VacationType {
   PaidLeave = 'Paid Leave',
   WorkOff = 'Work Off',
 }
+
+export interface NextPageProps {
+  params: Record<string, string>
+  // It is actually of type Record<string, string | string[]>,
+  // but I am too lazy to handle it.
+  searchParams: Record<string, string>
+}
+
