@@ -12,6 +12,7 @@ import { Select } from '@/components/Select'
 import { VacationStatus, VacationType } from '@/services/types'
 import { formDataToObject } from '@/services/form'
 import styles from './VacationForm.module.css'
+import { usePageForm } from '@/hooks/PageForm'
 
 interface VacationFormCreate {
   editing?: false
@@ -39,9 +40,25 @@ export const VacationForm: FC<VacationFormProps> = ({
   values,
   onSubmit,
 }) => {
-  const [loading, setLoading] = useState(false)
-  const formRef = useRef<HTMLFormElement>(null)
-  const { refresh } = useRouter()
+  const { isLoading, isSearching, formRef, getDefault, getDefaultDate, handleSubmit } = usePageForm(
+    {
+      editing,
+      values,
+      onSubmit: useCallback(
+        async newValues => {
+          await ky('/api/vacation', {
+            method: editing ? 'put' : 'post',
+            json: {
+              ...newValues,
+              id: editing ? values.id : undefined,
+            },
+          })
+          onSubmit?.()
+        },
+        [editing, onSubmit, values?.id],
+      ),
+    },
+  )
 
   const employeeOptions = employees.map(({ id, firstName, lastName }) => ({
     title: `${firstName} ${lastName}`,
@@ -53,87 +70,70 @@ export const VacationForm: FC<VacationFormProps> = ({
     value: id,
   }))
 
-  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-    async event => {
-      event.preventDefault()
-      setLoading(true)
-      await ky('/api/vacation', {
-        method: editing ? 'put' : 'post',
-        json: {
-          ...formDataToObject(event.currentTarget),
-          id: editing ? values.id : undefined,
-        },
-      })
-      setLoading(false)
-      formRef.current?.reset()
-      refresh()
-      onSubmit?.()
-    },
-    [editing, values?.id, refresh, onSubmit],
-  )
-
   return (
     <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.left}>
         <div className={styles.top}>
           <Select
             className={styles.flexGrow}
-            defaultValue={editing ? values.employeeId : undefined}
+            defaultValue={getDefault('employeeId')}
             name="employeeId"
             label="Employee"
             placeholder="Select employee..."
             options={employeeOptions}
-            required
+            required={!isSearching}
+            allowEmpty={isSearching}
           />
           <Select
             className={styles.flexGrow}
-            defaultValue={editing ? values.type : undefined}
+            defaultValue={getDefault('type')}
             name="type"
             label="Category"
             placeholder="Select category..."
             options={typeOptions}
-            required
+            required={!isSearching}
+            allowEmpty={isSearching}
           />
           <Input
             name="startDate"
             label="Start Date"
             type="date"
-            defaultValue={editing ? DateTime.fromISO(values.startDate).toISODate() : undefined}
-            required
+            defaultValue={getDefaultDate('startDate')?.toISODate()}
+            required={!isSearching}
           />
           <Input
             name="endDate"
             label="End Date"
             type="date"
-            defaultValue={editing ? DateTime.fromISO(values.endDate).toISODate() : undefined}
-            required
+            defaultValue={getDefaultDate('endDate')?.toISODate()}
+            required={!isSearching}
           />
           <Select
             className={styles.flexGrow}
-            defaultValue={editing ? values.status : VacationStatus.Pending}
+            defaultValue={
+              getDefault('status') ?? (isSearching ? undefined : VacationStatus.Pending)
+            }
             name="status"
             label="Status"
+            placeholder="Select status..."
             options={statusOptions}
-            required
+            required={!isSearching}
+            allowEmpty={isSearching}
           />
         </div>
-        <Input
-          name="note"
-          label="Description"
-          type="text"
-          defaultValue={editing ? values.note : undefined}
-        />
+        <Input name="note" label="Description" type="text" defaultValue={getDefault('note')} />
       </div>
       <div className={styles.right}>
         <Select
           className={styles.flexGrow}
-          defaultValue={editing ? values.managerId : undefined}
+          defaultValue={getDefault('managerId')}
           name="managerId"
           label="Managed By"
           placeholder="Select manager..."
           options={managerOptions}
+          allowEmpty={isSearching}
         />
-        <Button type="submit" loading={loading}>
+        <Button type="submit" loading={isLoading}>
           Submit
         </Button>
       </div>
