@@ -19,8 +19,8 @@ export default async function EmployeesPage({ searchParams }: NextPageProps) {
     .select(sql<string[]>`array_agg(distinct projects.title)`.as('projects'))
     .groupBy('employees.id')
 
-  if (firstName) request = request.where('employees.firstName', '=', firstName)
-  if (lastName) request = request.where('employees.lastName', '=', lastName)
+  if (firstName) request = request.where('employees.firstName', 'like', '%' + firstName + '%')
+  if (lastName) request = request.where('employees.lastName', 'like', '%' + lastName + '%')
   if (role) request = request.where('employees.role', '=', role as EmployeeRole)
   if (price) request = request.where('employees.price', '=', Number(price))
   if (techStack)

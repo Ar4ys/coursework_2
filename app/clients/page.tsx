@@ -17,8 +17,8 @@ export default async function ClientsPage({ searchParams }: NextPageProps) {
     .select(sql<string[]>`array_agg(title)`.as('projects'))
     .groupBy('clients.id')
 
-  if (firstName) request = request.where('clients.firstName', '=', firstName)
-  if (lastName) request = request.where('clients.lastName', '=', lastName)
+  if (firstName) request = request.where('clients.firstName', 'like', '%' + firstName + '%')
+  if (lastName) request = request.where('clients.lastName', 'like', '%' + lastName + '%')
   if (createdAt) {
     const date = DateTime.fromISO(createdAt)
     if (date.isValid)
