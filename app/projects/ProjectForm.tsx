@@ -7,9 +7,9 @@ import ky from 'ky'
 
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
-import { formDataToObject } from '@/services/form'
-import styles from './ProjectForm.module.css'
 import { Select } from '@/components/Select'
+import { usePageForm } from '@/hooks/PageForm'
+import styles from './ProjectForm.module.css'
 
 interface ProjectFormCreate {
   editing?: false
@@ -27,35 +27,30 @@ type ProjectFormProps = (ProjectFormEdit | ProjectFormCreate) & {
 }
 
 export const ProjectForm: FC<ProjectFormProps> = ({ clients, editing, values, onSubmit }) => {
-  const [loading, setLoading] = useState(false)
-  const formRef = useRef<HTMLFormElement>(null)
-  const { refresh } = useRouter()
+  const { isLoading, isSearching, formRef, getDefault, getDefaultArray, handleSubmit } =
+    usePageForm({
+      editing,
+      values,
+      onSubmit: useCallback(
+        async newValues => {
+          await ky('/api/project', {
+            method: editing ? 'put' : 'post',
+            json: {
+              ...newValues,
+              techStack: newValues.techStack.split(',').map(tech => tech.trim()),
+              id: editing ? values.id : undefined,
+            },
+          })
+          onSubmit?.()
+        },
+        [editing, onSubmit, values?.id],
+      ),
+    })
 
   const clientsOptions = clients.map(({ id, firstName, lastName }) => ({
     title: `${firstName} ${lastName}`,
     value: id,
   }))
-
-  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-    async event => {
-      event.preventDefault()
-      setLoading(true)
-      const data = formDataToObject(event.currentTarget)
-      await ky('/api/project', {
-        method: editing ? 'put' : 'post',
-        json: {
-          ...data,
-          techStack: data.techStack.split(',').map(tech => tech.trim()),
-          id: editing ? values.id : undefined,
-        },
-      })
-      setLoading(false)
-      formRef.current?.reset()
-      refresh()
-      onSubmit?.()
-    },
-    [editing, values?.id, refresh, onSubmit],
-  )
 
   return (
     <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
@@ -63,25 +58,25 @@ export const ProjectForm: FC<ProjectFormProps> = ({ clients, editing, values, on
         className={styles.flexGrow}
         name="title"
         label="Title"
-        defaultValue={editing ? values.title : undefined}
-        required
+        defaultValue={getDefault('title')}
+        required={!isSearching}
       />
       <Select
         className={styles.flexGrow}
-        defaultValue={editing ? values.clientId : undefined}
+        defaultValue={getDefault('clientId')}
         name="clientId"
         label="Client"
         placeholder="Select client..."
         options={clientsOptions}
-        required
+        required={!isSearching}
       />
       <Input
         className={styles.flexGrow}
         name="techStack"
         label="Tech Stack"
-        defaultValue={editing ? values.techStack.join(', ') : undefined}
+        defaultValue={getDefaultArray('techStack').join(', ')}
       />
-      <Button className={styles.button} type="submit" loading={loading}>
+      <Button className={styles.button} type="submit" loading={isLoading}>
         Submit
       </Button>
     </form>
