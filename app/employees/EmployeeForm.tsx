@@ -40,7 +40,7 @@ export const EmployeeForm: FC<EmployeeFormProps> = ({ editing, values, onSubmit 
         method: editing ? 'put' : 'post',
         json: {
           ...data,
-          techStack: (data.techStack as string).split(',').map(tech => tech.trim()),
+          techStack: data.techStack.split(',').map(tech => tech.trim()),
           id: editing ? values.id : undefined,
         },
       })

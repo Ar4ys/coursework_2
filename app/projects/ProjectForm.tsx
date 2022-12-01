@@ -45,7 +45,7 @@ export const ProjectForm: FC<ProjectFormProps> = ({ clients, editing, values, on
         method: editing ? 'put' : 'post',
         json: {
           ...data,
-          techStack: (data.techStack as string).split(',').map(tech => tech.trim()),
+          techStack: data.techStack.split(',').map(tech => tech.trim()),
           id: editing ? values.id : undefined,
         },
       })
