@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavBar, NavLink } from '@/components/NavBar'
+import { SummaryForm } from './SummaryForm'
 
 const navLinks: Array<NavLink> = [
   {
@@ -16,6 +17,7 @@ export default async function SummaryLayout({ children }: { children: React.Reac
   return (
     <>
       <NavBar links={navLinks} exact />
+      <SummaryForm />
       {children}
     </>
   )

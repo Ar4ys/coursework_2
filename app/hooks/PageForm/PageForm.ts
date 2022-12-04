@@ -4,17 +4,18 @@ import { DateTime } from 'luxon'
 import { formDataToObject } from '@/services/form'
 
 interface UsePageForm {
-  editing: boolean | undefined | null
-  values: Record<string, any> | undefined | null | false
-  onSubmit: (values: Record<string, string>) => Promise<void> | void
+  searching?: boolean
+  editing?: boolean | null
+  values?: Record<string, any> | null | false
+  onSubmit?: (values: Record<string, string>) => Promise<void> | void
 }
 
-export const usePageForm = ({ editing, values, onSubmit }: UsePageForm) => {
+export const usePageForm = ({ searching, editing, values, onSubmit }: UsePageForm) => {
   const [isLoading, setLoading] = useState(false)
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const formRef = useRef<HTMLFormElement>(null)
-  const isSearching = pathname?.endsWith('/search')
+  const isSearching = pathname?.endsWith('/search') || searching
   const { refresh, push } = useRouter()
 
   const getDefault = useCallback(
