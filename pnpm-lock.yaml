@@ -7,6 +7,7 @@ specifiers:
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
   caniuse-lite: 1.0.30001434
+  chart.js: ^4.0.1
   clsx: ^1.2.1
   dotenv: ^16.0.3
   eslint: 8.28.0
@@ -19,6 +20,7 @@ specifiers:
   pg: ^8.8.0
   pg-native: ^3.0.1
   react: 18.2.0
+  react-chartjs-2: ^5.0.1
   react-dom: 18.2.0
   ts-node: ^10.9.1
   typescript: 4.9.3
@@ -29,6 +31,7 @@ dependencies:
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
+  chart.js: 4.0.1
   clsx: 1.2.1
   dotenv: 16.0.3
   eslint: 8.28.0
@@ -40,6 +43,7 @@ dependencies:
   pg: 8.8.0_pg-native@3.0.1
   pg-native: 3.0.1
   react: 18.2.0
+  react-chartjs-2: 5.0.1_mdhqntb7qznawtkbfweh7f2mzm
   react-dom: 18.2.0_react@18.2.0
   typescript: 4.9.3
   usehooks-ts: 2.9.1_biqbaboplfbrettd7655fr4n2y
@@ -614,6 +618,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  /chart.js/4.0.1:
+    resolution: {integrity: sha512-5/8/9eBivwBZK81mKvmIwTb2Pmw4D/5h1RK9fBWZLLZ8mCJ+kfYNmV9rMrGoa5Hgy2/wVDBMLSUDudul2/9ihA==}
+    engines: {pnpm: ^7.0.0}
+    dev: false
 
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -2254,6 +2263,16 @@ packages:
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+    dev: false
+
+  /react-chartjs-2/5.0.1_mdhqntb7qznawtkbfweh7f2mzm:
+    resolution: {integrity: sha512-u38C9OxynlNCBp+79grgXRs7DSJ9w8FuQ5/HO5FbYBbri8HSZW+9SWgjVshLkbXBfXnMGWakbHEtvN0nL2UG7Q==}
+    peerDependencies:
+      chart.js: ^4.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 4.0.1
+      react: 18.2.0
     dev: false
 
   /react-dom/18.2.0_react@18.2.0:

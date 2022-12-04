@@ -1,11 +1,12 @@
+import { DB } from 'kysely-codegen'
 import { sql, WhereInterface } from 'kysely'
+import { DateTime } from 'luxon'
+
+import { NextPageProps } from '@/services/types'
 import { db } from '@/services/db'
 import { Table } from '@/components/Table'
 import { Text } from '@/components/Text'
-import styles from './page.module.css'
-import { NextPageProps } from '@/services/types'
-import { DB } from 'kysely-codegen'
-import { DateTime } from 'luxon'
+import styles from '../utils.module.css'
 
 export default async function TablePage({ searchParams }: NextPageProps) {
   const { from, to } = searchParams
