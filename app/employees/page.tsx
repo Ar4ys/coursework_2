@@ -42,7 +42,7 @@ export default async function EmployeesPage({ searchParams }: NextPageProps) {
           <tr key={employee.id}>
             <td>{`${employee.firstName} ${employee.lastName}`}</td>
             <td>{employee.role}</td>
-            <td>{employee.price}</td>
+            <td>{employee.price}$</td>
             <td>{employee.techStack.join(', ')}</td>
             <td>{employee.projects.join(', ')}</td>
             <td>{DateTime.fromJSDate(employee.createdAt).toLocaleString()}</td>

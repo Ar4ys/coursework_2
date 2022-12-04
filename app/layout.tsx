@@ -24,6 +24,10 @@ const navLinks: Array<NavLink> = [
     title: 'Projects',
     href: '/projects',
   },
+  {
+    title: 'Summary Report',
+    href: '/summary',
+  },
 ]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
